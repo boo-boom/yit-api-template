@@ -1,0 +1,33 @@
+import { BaseContext } from "koa";
+import { dealCatchError } from "@plugin/resProcessor";
+import { controller, apiInfo, reqBody, resSucc, resFail } from "@api-agg-decorator";
+import { {{params}} } from "@agg/{{params}}";
+import { {{success}} } from "@agg/{{success}}";
+import { {{error}} } from "@agg/{{error}}";
+import $axios from "@plugin/axios";
+
+@controller("{{api}}")
+class {{group}} {
+  @apiInfo({
+    description: "XXX",
+    methodOwner: "XXX",
+    securityLevel: "{{safe}}",
+    mt: ""
+  })
+  @reqBody({{params}})
+  @resSucc({{success}})
+  @resFail({{error}})
+  static async {{name}}(ctx: BaseContext) {
+    try {
+      const result = await $axios(ctx, {
+        url: "{{api}}",
+        data: ctx.request.body
+      });
+      ctx.send({ content: result.content[0] });
+    } catch (err) {
+      dealCatchError(ctx, err);
+    }
+  }
+}
+
+export default {{group}};
