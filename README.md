@@ -4,13 +4,13 @@
 
 > 需要在当前项目下使用该工具
 
-1. 安装
+#### 安装
 
 ```bash
 npm i yit-api-template -g
 ```
 
-2. 使用
+#### 使用
 
 ```bash
 api-ts
