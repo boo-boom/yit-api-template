@@ -14,7 +14,7 @@ const createdApi = answers => {
   if (!groups.includes(group)) {
     fs.mkdirSync(`${controllerPath}/${group}`);
   }
-  fs.writeFileSync(`${controllerPath}/${group}/${file}.js`, renderTemplate);
+  fs.writeFileSync(`${controllerPath}/${group}/${file}.ts`, renderTemplate);
   ora({ spinner: "smiley" }).succeed(chalk.blue.bold("[创建成功]"));
 };
 
@@ -50,7 +50,7 @@ inquirer
         return new Promise(resolve => {
           if (!isNodePrefix) resolve(`${chalk.red.bold("[命名错误]")} ${chalk.yellow.bold("请参照格式: node_aaa.bbb")}`);
           const group = delGroupPrefix(value.split(".")[0]);
-          const file = value.split(".")[1] + ".js";
+          const file = value.split(".")[1] + ".ts";
           const groups = fs.readdirSync(controllerPath);
           let files = [];
           if (groups.includes(group)) {
@@ -76,8 +76,9 @@ inquirer
     const name = api.split(".")[1];
     answers.group = group;
     answers.name = name;
-    answers.params = `Api_Node${firstToUpperCase(delGroupPrefix(group))}_${firstToUpperCase(name)}Params`;
-    answers.success = `Api_Node${firstToUpperCase(delGroupPrefix(group))}_${firstToUpperCase(name)}Response`;
-    answers.error = `Api_Node${firstToUpperCase(delGroupPrefix(group))}_${firstToUpperCase(name)}Error`;
+    answers.oriApi = `${delGroupPrefix(group)}.${delGroupPrefix(name)}`;
+    answers.params = `Api_Node${delGroupPrefix(group).toUpperCase()}_${firstToUpperCase(name)}Params`;
+    answers.success = `Api_Node${delGroupPrefix(group).toUpperCase()}_${firstToUpperCase(name)}Response`;
+    answers.error = `Api_Node${delGroupPrefix(group).toUpperCase()}_${firstToUpperCase(name)}Error`;
     createdApi(answers);
   });

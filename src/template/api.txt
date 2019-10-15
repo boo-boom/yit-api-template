@@ -9,10 +9,10 @@ import $axios from "@plugin/axios";
 @controller("{{api}}")
 class {{group}} {
   @apiInfo({
-    description: "XXX",
-    methodOwner: "XXX",
+    description: "接口描述...",
+    methodOwner: "接口负责人...",
     securityLevel: "{{safe}}",
-    mt: ""
+    mt: "{{oriApi}}"
   })
   @reqBody({{params}})
   @resSucc({{success}})
@@ -20,7 +20,7 @@ class {{group}} {
   static async {{name}}(ctx: BaseContext) {
     try {
       const result = await $axios(ctx, {
-        url: "{{api}}",
+        url: "{{oriApi}}",
         data: ctx.request.body
       });
       ctx.send({ content: result.content[0] });
